@@ -1,0 +1,1005 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Xenon Engine</h1>
+
+
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><strong>xenon</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>xenon</code></h1>
+<p>Xenon Engine - A 2D game engine for ComputerCraft</p>
+<p>
+
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#log">log (string)</a></td>
+	<td class="summary">A logging function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setScene">setScene (string)</a></td>
+	<td class="summary">Sets the current scene.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getScene">getScene ()</a></td>
+	<td class="summary">Gets the current scene name.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#clearSceneSprites">clearSceneSprites (string)</a></td>
+	<td class="summary">Clears the sprites in a scene.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#clearScreen">clearScreen ()</a></td>
+	<td class="summary">Clear the screen and dirty rects.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#titleScreen">titleScreen ()</a></td>
+	<td class="summary">Show the xenon title screen.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#setCWD">setCWD (string)</a></td>
+	<td class="summary">Set CWD for xenon to reference.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sprite:SetPosition">sprite:SetPosition (x, y)</a></td>
+	<td class="summary">Set the direct position of a sprite.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sprite:GetSize">sprite:GetSize ()</a></td>
+	<td class="summary">Returns the size of the sprite.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sprite:Move">sprite:Move (dx, dy)</a></td>
+	<td class="summary">Moves the sprite by a delta amount.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sprite:Delete">sprite:Delete (time)</a></td>
+	<td class="summary">Delete a sprite after a certain amount of time.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sprite:SetScene">sprite:SetScene (scene)</a></td>
+	<td class="summary">Sets the sprite's scene.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sprite:SetLayer">sprite:SetLayer (layer)</a></td>
+	<td class="summary">Sets the sprite's layer.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sprite:GetMetadataValue">sprite:GetMetadataValue (key)</a></td>
+	<td class="summary">Gets a metadata value from the sprite.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sprite:SetMetadataValue">sprite:SetMetadataValue (key, value)</a></td>
+	<td class="summary">Sets a metadata value to the sprite.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sprite:AttachOnSpriteClick">sprite:AttachOnSpriteClick (event, func)</a></td>
+	<td class="summary">Attach a callback function to an event.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sprite:SmoothPosition">sprite:SmoothPosition (x, y, time)</a></td>
+	<td class="summary">Linearly move a sprite to a direct position.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sprite:SmoothMove">sprite:SmoothMove (x, y, time)</a></td>
+	<td class="summary">Linearly move a sprite by a delta amount.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sprite:SetIdle">sprite:SetIdle (isIdle)</a></td>
+	<td class="summary">Set a sprite's idle value.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sprite:FireAnimation">sprite:FireAnimation (animation)</a></td>
+	<td class="summary">Fire a sprite's animation.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#newSpriteRef">newSpriteRef (string, string)</a></td>
+	<td class="summary">Creates a new animated sprite from a reference file.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#newStillSpriteRef">newStillSpriteRef (string, string)</a></td>
+	<td class="summary">Creates a new static sprite from a reference file.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#inputLoop">inputLoop ()</a></td>
+	<td class="summary">Starts the input event processing loop.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#registerKey">registerKey (string, function)</a></td>
+	<td class="summary">Registers a callback for key events.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#getKeyState">getKeyState (string)</a></td>
+	<td class="summary">Gets the current state of a key.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#clearKeyTransients">clearKeyTransients ()</a></td>
+	<td class="summary">Clears transient key states (press/release).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#createMovementSystem">createMovementSystem (table[, table], options)</a></td>
+	<td class="summary">Creates a movement system for a sprite.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#createProjectileSystem">createProjectileSystem (source, options)</a></td>
+	<td class="summary">Creates a projectile system for a sprite</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#createCollisionGroup">createCollisionGroup ()</a></td>
+	<td class="summary">Creates a collision group for sprite collision detection.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#update">update (number)</a></td>
+	<td class="summary">Updates the game state and renders sprites.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#runGame">runGame (function)</a></td>
+	<td class="summary">Runs the main game loop with the provided update function.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "log"></a>
+    <strong>log (string)</strong>
+    </dt>
+    <dd>
+    A logging function.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">string</span>
+         text The text to log to xenon.log.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setScene"></a>
+    <strong>setScene (string)</strong>
+    </dt>
+    <dd>
+    Sets the current scene.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">string</span>
+         sceneName The name of the scene to switch to.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getScene"></a>
+    <strong>getScene ()</strong>
+    </dt>
+    <dd>
+    Gets the current scene name.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        string currentScene The name of the scene.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "clearSceneSprites"></a>
+    <strong>clearSceneSprites (string)</strong>
+    </dt>
+    <dd>
+    Clears the sprites in a scene.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">string</span>
+         sceneName The name of the scene.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "clearScreen"></a>
+    <strong>clearScreen ()</strong>
+    </dt>
+    <dd>
+    Clear the screen and dirty rects.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "titleScreen"></a>
+    <strong>titleScreen ()</strong>
+    </dt>
+    <dd>
+    Show the xenon title screen.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "setCWD"></a>
+    <strong>setCWD (string)</strong>
+    </dt>
+    <dd>
+    Set CWD for xenon to reference.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">string</span>
+         path The path to set as the CWD.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+    <h3>Raises:</h3>
+    Error if path doesn't exist
+
+
+
+</dd>
+    <dt>
+    <a name = "sprite:SetPosition"></a>
+    <strong>sprite:SetPosition (x, y)</strong>
+    </dt>
+    <dd>
+    Set the direct position of a sprite.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         numberThe x position to place the sprite at.
+        </li>
+        <li><span class="parameter">y</span>
+         number The y position to place the sprite at.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sprite:GetSize"></a>
+    <strong>sprite:GetSize ()</strong>
+    </dt>
+    <dd>
+    Returns the size of the sprite.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+        number width The width of the sprite.</li>
+        <li>
+        number height The height of the sprite.</li>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sprite:Move"></a>
+    <strong>sprite:Move (dx, dy)</strong>
+    </dt>
+    <dd>
+    Moves the sprite by a delta amount.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dx</span>
+         number The horizontal delta.
+        </li>
+        <li><span class="parameter">dy</span>
+         number The vertical delta.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sprite:Delete"></a>
+    <strong>sprite:Delete (time)</strong>
+    </dt>
+    <dd>
+    Delete a sprite after a certain amount of time.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">time</span>
+         number The amount of time before the sprite is to be deleted.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sprite:SetScene"></a>
+    <strong>sprite:SetScene (scene)</strong>
+    </dt>
+    <dd>
+    Sets the sprite's scene.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">scene</span>
+         string The scene to set the sprite to.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sprite:SetLayer"></a>
+    <strong>sprite:SetLayer (layer)</strong>
+    </dt>
+    <dd>
+    Sets the sprite's layer.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">layer</span>
+         number The layer to set the sprite to.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sprite:GetMetadataValue"></a>
+    <strong>sprite:GetMetadataValue (key)</strong>
+    </dt>
+    <dd>
+    Gets a metadata value from the sprite.  Useful for tracking health or other stats.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+         any The metadata key to access.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        meta[key] any The metadata value.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sprite:SetMetadataValue"></a>
+    <strong>sprite:SetMetadataValue (key, value)</strong>
+    </dt>
+    <dd>
+    Sets a metadata value to the sprite.  Useful for tracking health or other stats.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">key</span>
+         any The metadata key to use.
+        </li>
+        <li><span class="parameter">value</span>
+         any The value to set the key to.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sprite:AttachOnSpriteClick"></a>
+    <strong>sprite:AttachOnSpriteClick (event, func)</strong>
+    </dt>
+    <dd>
+    Attach a callback function to an event.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">event</span>
+         string The event to attach the callback to.
+        </li>
+        <li><span class="parameter">func</span>
+         function The callback function.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sprite:SmoothPosition"></a>
+    <strong>sprite:SmoothPosition (x, y, time)</strong>
+    </dt>
+    <dd>
+    Linearly move a sprite to a direct position.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         number The x position to set the sprite to.
+        </li>
+        <li><span class="parameter">y</span>
+         number The y position to set the sprite to.
+        </li>
+        <li><span class="parameter">time</span>
+         number The time it will take for the sprite to move to the position.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sprite:SmoothMove"></a>
+    <strong>sprite:SmoothMove (x, y, time)</strong>
+    </dt>
+    <dd>
+    Linearly move a sprite by a delta amount.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         number The x delta.
+        </li>
+        <li><span class="parameter">y</span>
+         number The y delta.
+        </li>
+        <li><span class="parameter">time</span>
+         number The time it will take for the sprite to move to the position.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sprite:SetIdle"></a>
+    <strong>sprite:SetIdle (isIdle)</strong>
+    </dt>
+    <dd>
+    Set a sprite's idle value.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">isIdle</span>
+         bool Boolean value for the sprite being idle.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "sprite:FireAnimation"></a>
+    <strong>sprite:FireAnimation (animation)</strong>
+    </dt>
+    <dd>
+    Fire a sprite's animation.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">animation</span>
+         string The animation to fire.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "newSpriteRef"></a>
+    <strong>newSpriteRef (string, string)</strong>
+    </dt>
+    <dd>
+    Creates a new animated sprite from a reference file.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">string</span>
+         refPath The path of the sprite reference.
+        </li>
+        <li><span class="parameter">string</span>
+         refPath The path of the sprite reference.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table The created sprite object
+    </ol>
+
+    <h3>Raises:</h3>
+    Error if sprite name exists or reference is invalid
+
+
+
+</dd>
+    <dt>
+    <a name = "newStillSpriteRef"></a>
+    <strong>newStillSpriteRef (string, string)</strong>
+    </dt>
+    <dd>
+    Creates a new static sprite from a reference file.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">string</span>
+         refPath The path of the sprite reference.
+        </li>
+        <li><span class="parameter">string</span>
+         refPath The path of the sprite reference.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table The created sprite object
+    </ol>
+
+    <h3>Raises:</h3>
+    Error if sprite name exists or reference is invalid
+
+
+
+</dd>
+    <dt>
+    <a name = "inputLoop"></a>
+    <strong>inputLoop ()</strong>
+    </dt>
+    <dd>
+    Starts the input event processing loop.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "registerKey"></a>
+    <strong>registerKey (string, function)</strong>
+    </dt>
+    <dd>
+    Registers a callback for key events.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">string</span>
+         key The key to monitor
+        </li>
+        <li><span class="parameter">function</span>
+         callback The function to call on key events
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "getKeyState"></a>
+    <strong>getKeyState (string)</strong>
+    </dt>
+    <dd>
+    Gets the current state of a key.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">string</span>
+         key The key to check
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table State table with pressed, held, and released fields
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "clearKeyTransients"></a>
+    <strong>clearKeyTransients ()</strong>
+    </dt>
+    <dd>
+    Clears transient key states (press/release).
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "createMovementSystem"></a>
+    <strong>createMovementSystem (table[, table], options)</strong>
+    </dt>
+    <dd>
+    Creates a movement system for a sprite.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">table</span>
+         options Configuration options
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">table</span>
+         options Configuration options
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">options</span> table Configuration options
+        <ul>
+        <li><span class="parameter">speed</span>
+         number Movement speed (default: 5)
+        </li>
+        <li><span class="parameter">moveInterval</span>
+         number Movement interval (default: 0.1)
+        </li>
+        </li></ul>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table The movement system with Update method
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "createProjectileSystem"></a>
+    <strong>createProjectileSystem (source, options)</strong>
+    </dt>
+    <dd>
+    Creates a projectile system for a sprite
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">source</span>
+         table The source sprite
+        </li>
+        <li><span class="parameter">options</span> table Configuration options table with these possible fields:
+        <ul>
+        <li><span class="parameter">spritePath</span>
+         string Path to projectile sprite
+        </li>
+        <li><span class="parameter">speed</span>
+         number Projectile speed (default: 8)
+        </li>
+        <li><span class="parameter">lifetime</span>
+         number Projectile lifetime in seconds (default: 3)
+        </li>
+        <li><span class="parameter">offset</span>
+         number Spawn offset from source (default: 0)
+        </li>
+        <li><span class="parameter">layer</span>
+         number Render layer (default: source.layer + 1)
+        </li>
+        </li></ul>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table The projectile system with Fire and Update methods
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "createCollisionGroup"></a>
+    <strong>createCollisionGroup ()</strong>
+    </dt>
+    <dd>
+    Creates a collision group for sprite collision detection.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        table The collision group with add, remove, and checkCollisions methods
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "update"></a>
+    <strong>update (number)</strong>
+    </dt>
+    <dd>
+    Updates the game state and renders sprites.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">number</span>
+         dt Delta time since last update
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "runGame"></a>
+    <strong>runGame (function)</strong>
+    </dt>
+    <dd>
+    Runs the main game loop with the provided update function.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">function</span>
+         updateFunc The game's update function
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nil
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/lunarmodules/LDoc">LDoc 1.5.0</a></i>
+<i style="float:right;">Last updated 2025-06-30 06:36:38 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
