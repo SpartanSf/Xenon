@@ -1,7 +1,14 @@
+--- Xenon Engine - A 2D game engine for ComputerCraft
+-- @module xenon
+-- @alias xenon
 local box
 local mode = 1
 local xenon = {}
 
+--- A logging function.
+-- @function log
+-- @param string text The text to log to xenon.log.
+-- @return nil
 function xenon.log(text)
 	local xenonFile
 	if not fs.exists("xenon.log") then
@@ -148,9 +155,13 @@ local frame_cache_usage = {}
 local frame_cache_order = {}
 local MAX_CACHE_SIZE = 100
 
+
+--- Updates cache usage tracking for LRU eviction.
+-- @local
+--- @param key string The cache key being accessed
+-- @return nil
 local function touch_cache_key(key)
 	if frame_cache_usage[key] then
-		-- Move to end of list
 		for i = #frame_cache_order, 1, -1 do
 			if frame_cache_order[i] == key then
 				table.remove(frame_cache_order, i)
@@ -162,6 +173,9 @@ local function touch_cache_key(key)
 	table.insert(frame_cache_order, key)
 end
 
+--- Evicts least recently used items if cache is full.
+-- @local
+-- @return nil
 local function evict_if_needed()
 	while #frame_cache_order > MAX_CACHE_SIZE do
 		local oldest = table.remove(frame_cache_order, 1)
@@ -170,6 +184,10 @@ local function evict_if_needed()
 	end
 end
 
+--- Gets a cached frame with optional rotation
+--- @param path string Path to the frame file
+--- @param rotation? string Optional rotation ("left", "right", or "down")
+--- @return table|nil The frame data or nil if not found
 local function get_cached_frame(path, rotation)
 	local cache_key = path .. "|" .. (rotation or "none")
 	local cached = frame_cache[cache_key]
@@ -251,14 +269,25 @@ end
 
 local currentScene = "Scene 1"
 
+--- Sets the current scene.
+-- @function setScene
+-- @param string sceneName The name of the scene to switch to.
+-- @return nil
 function xenon.setScene(sceneName)
 	currentScene = sceneName
 end
 
+--- Gets the current scene name.
+-- @function getScene
+-- @return string currentScene The name of the scene.
 function xenon.getScene()
 	return currentScene
 end
 
+--- Clears the sprites in a scene.
+-- @function clearSceneSprites
+-- @param string sceneName The name of the scene.
+-- @return nil
 function xenon.clearSceneSprites(sceneName)
 	for name, sprite in pairs(xenon.sprites) do
 		if sprite.scene == sceneName then
@@ -272,6 +301,9 @@ function xenon.clearSceneSprites(sceneName)
 	end
 end
 
+--- Clear the screen and dirty rects.
+-- @function clearScreen
+-- @return nil
 function xenon.clearScreen()
 	term.setBackgroundColor(colors.black)
 	term.clear()
@@ -285,6 +317,9 @@ function xenon.clearScreen()
 	}
 end
 
+--- Show the xenon title screen.
+-- @function titleScreen
+-- @return nil
 function xenon.titleScreen()
 	xenon.clearScreen()
 	local w, h = term.getSize(mode)
@@ -302,6 +337,11 @@ function xenon.titleScreen()
 	term.setCursorPos(1, 10)
 end
 
+--- Set CWD for xenon to reference.
+-- @function setCWD
+-- @param string path The path to set as the CWD.
+-- @return nil
+-- @raise Error if path doesn't exist
 function xenon.setCWD(path)
 	cwd = (path and fs.exists(path)) and path or error("Invalid path provided to xenon.setCWD", 0)
 end
@@ -322,7 +362,13 @@ local function check_anim(key, refData, baseDir)
 	end
 end
 
+--- Applies common sprite methods
+--- @param sprite table The sprite object
+--- @param name string The sprite name
+--- @param spriteTable table The table containing the sprite
 local function apply_common_sprite_methods(sprite, name, spriteTable)
+	--- Internal function to mark places to redraw.
+	-- @return nil
 	function sprite:MarkDirty()
 		if self.prevPosition then
 			local w, h = self:GetSize()
@@ -343,6 +389,10 @@ local function apply_common_sprite_methods(sprite, name, spriteTable)
 		})
 	end
 
+	--- Set the direct position of a sprite.
+	-- @param x numberThe x position to place the sprite at.
+	-- @param y number The y position to place the sprite at.
+	-- @return nil
 	function sprite:SetPosition(x, y)
 		self.prevPosition = { self.position[1], self.position[2] }
 		self.position[1] = q_round(x)
@@ -350,6 +400,9 @@ local function apply_common_sprite_methods(sprite, name, spriteTable)
 		self:MarkDirty()
 	end
 
+	--- Returns the size of the sprite.
+	-- @return number width The width of the sprite.
+	-- @return number height The height of the sprite.
 	function sprite:GetSize()
 		if self.activeAnimation then
 			local anim_data = self.data[self.activeAnimation]
@@ -371,6 +424,10 @@ local function apply_common_sprite_methods(sprite, name, spriteTable)
 		return 16, 16
 	end
 
+	--- Moves the sprite by a delta amount.
+	-- @param dx number The horizontal delta.
+	-- @param dy number The vertical delta.
+	-- @return nil
 	function sprite:Move(dx, dy)
 		self.prevPosition = { self.position[1], self.position[2] }
 
@@ -387,15 +444,24 @@ local function apply_common_sprite_methods(sprite, name, spriteTable)
 		self:MarkDirty()
 	end
 
+	--- Delete a sprite after a certain amount of time.
+	-- @param time number The amount of time before the sprite is to be deleted.
+	-- @return nil
 	function sprite:Delete(time)
 		time = time or 0
 		table.insert(deletionQueue, { spriteTable, self.name, os.epoch("utc") / 1000 + time })
 	end
 
+	--- Sets the sprite's scene.
+	-- @param scene string The scene to set the sprite to.
+	-- @return nil
 	function sprite:SetScene(scene)
 		self.scene = scene
 	end
 
+	--- Sets the sprite's layer.
+	-- @param layer number The layer to set the sprite to.
+	-- @return nil
 	function sprite:SetLayer(layer)
 		if type(layer) ~= "number" then
 			error("Layer must be a number, not a " .. type(layer))
@@ -403,19 +469,35 @@ local function apply_common_sprite_methods(sprite, name, spriteTable)
 		self.layer = layer
 	end
 
+	--- Gets a metadata value from the sprite. Useful for tracking health or other stats.
+	-- @param key any The metadata key to access.
+	-- @return meta[key] any The metadata value.
 	function sprite:GetMetadataValue(key)
 		return self.meta[key]
 	end
 
+	--- Sets a metadata value to the sprite. Useful for tracking health or other stats.
+	-- @param key any The metadata key to use.
+	-- @param value any The value to set the key to.
+	-- @return nil
 	function sprite:SetMetadataValue(key, value)
 		self.meta[key] = value
 	end
 
-	function sprite:AttachOnSpriteClick(func)
-		spriteListeners["onSpriteClick"] = spriteListeners["onSpriteClick"] or {}
-		table.insert(spriteListeners["onSpriteClick"], { self, func })
+	--- Attach a callback function to an event.
+	-- @param event string The event to attach the callback to.
+	-- @param func function The callback function.
+	-- @return nil
+	function sprite:AttachOnSpriteClick(event, func)
+		spriteListeners[event] = spriteListeners[event] or {}
+		table.insert(spriteListeners[event], { self, func })
 	end
 
+	--- Linearly move a sprite to a direct position.
+	-- @param x number The x position to set the sprite to.
+	-- @param y number The y position to set the sprite to.
+	-- @param time number The time it will take for the sprite to move to the position.
+	-- @return nil
 	function sprite:SmoothPosition(x, y, time)
 		local sx, sy = self.position[1], self.position[2]
 		local steps = math.max(1, math.floor(time / 0.05))
@@ -428,6 +510,11 @@ local function apply_common_sprite_methods(sprite, name, spriteTable)
 		}
 	end
 
+	--- Linearly move a sprite by a delta amount.
+	-- @param x number The x delta.
+	-- @param y number The y delta.
+	-- @param time number The time it will take for the sprite to move to the position.
+	-- @return nil
 	function sprite:SmoothMove(x, y, time)
 		local sx, sy = self.position[1], self.position[2]
 		local steps = math.max(1, math.floor(time / 0.05))
@@ -440,10 +527,16 @@ local function apply_common_sprite_methods(sprite, name, spriteTable)
 		}
 	end
 
+	--- Set a sprite's idle value.
+	-- @param isIdle bool Boolean value for the sprite being idle.
+	-- @return nil
 	function sprite:SetIdle(isIdle)
 		self.idle = isIdle
 	end
 
+	--- Fire a sprite's animation.
+	-- @param animation string The animation to fire.
+	-- @return nil
 	function sprite:FireAnimation(animation)
 		if not self.data[animation] then
 			error("Animation '" .. animation .. "' not found in sprite reference")
@@ -455,6 +548,12 @@ local function apply_common_sprite_methods(sprite, name, spriteTable)
 	end
 end
 
+--- Creates a new animated sprite from a reference file.
+-- @function newSpriteRef
+-- @param string name The name of the sprite.
+-- @param string refPath The path of the sprite reference.
+-- @return table The created sprite object
+-- @raise Error if sprite name exists or reference is invalid
 function xenon.newSpriteRef(name, refPath)
 	if xenon.sprites[name] then
 		error("Sprite name '" .. name .. "' already exists", 2)
@@ -526,11 +625,6 @@ function xenon.newSpriteRef(name, refPath)
 		self.facing = direction
 	end
 
-	function newSprite:AttachOnClick(func)
-		spriteListeners["onClick"] = spriteListeners["onClick"] or {}
-		table.insert(spriteListeners["onClick"], { self, func })
-	end
-
 	function newSprite:LookAt(x, y)
 		local dx = x - self.position[1]
 		local dy = y - self.position[2]
@@ -546,6 +640,12 @@ function xenon.newSpriteRef(name, refPath)
 	return newSprite
 end
 
+--- Creates a new static sprite from a reference file.
+-- @function newStillSpriteRef
+-- @param string name The name of the sprite.
+-- @param string refPath The path of the sprite reference.
+-- @return table The created sprite object
+-- @raise Error if sprite name exists or reference is invalid
 function xenon.newStillSpriteRef(name, refPath)
 	if xenon.still_sprites[name] then
 		error("Sprite name '" .. name .. "' already exists", 2)
@@ -618,6 +718,9 @@ function xenon.newStillSpriteRef(name, refPath)
 	return newSprite
 end
 
+--- Starts the input event processing loop.
+-- @function inputLoop
+-- @return nil
 function xenon.inputLoop()
 	while true do
 		local event, key = os.pullEvent()
@@ -664,12 +767,20 @@ function xenon.inputLoop()
 	end
 end
 
-function xenon.registerKey(key, callback, options)
-	options = options or {}
+--- Registers a callback for key events.
+-- @function registerKey
+-- @param string key The key to monitor
+-- @param function callback The function to call on key events
+-- @return nil
+function xenon.registerKey(key, callback)
 	keyCallbacks[key] = keyCallbacks[key] or {}
 	table.insert(keyCallbacks[key], callback)
 end
 
+--- Gets the current state of a key.
+-- @function getKeyState
+-- @param string key The key to check
+-- @return table State table with pressed, held, and released fields
 function xenon.getKeyState(key)
 	if not keyStates[key] then
 		return {
@@ -681,6 +792,9 @@ function xenon.getKeyState(key)
 	return keyStates[key]
 end
 
+--- Clears transient key states (press/release).
+-- @function clearKeyTransients
+-- @return nil
 function xenon.clearKeyTransients()
 	for key, state in pairs(keyStates) do
 		state.pressed = false
@@ -688,6 +802,14 @@ function xenon.clearKeyTransients()
 	end
 end
 
+--- Creates a movement system for a sprite.
+-- @function createMovementSystem
+-- @param table sprite The sprite to control
+-- @param[opt] table options Configuration options
+--- @param options table Configuration options
+--- @param options.speed number Movement speed (default: 5)
+--- @param options.moveInterval number Movement interval (default: 0.1)
+-- @return table The movement system with Update method
 function xenon.createMovementSystem(sprite, options)
 	options = options or {}
 	local system = {
@@ -754,12 +876,21 @@ function xenon.createMovementSystem(sprite, options)
 	return system
 end
 
+--- Creates a projectile system for a sprite
+--- @param source table The source sprite
+--- @param options table Configuration options table with these possible fields:
+--- @param options.spritePath string Path to projectile sprite
+--- @param options.speed number Projectile speed (default: 8)
+--- @param options.lifetime number Projectile lifetime in seconds (default: 3)
+--- @param options.offset number Spawn offset from source (default: 0)
+--- @param options.layer number Render layer (default: source.layer + 1)
+--- @return table The projectile system with Fire and Update methods
 function xenon.createProjectileSystem(source, options)
 	options = options or {}
 	local system = {
 		projectiles = {},
 		source = source,
-		spritePath = options.spritePath or "testgame/assets/spriterefs/fire.spr",
+		spritePath = options.spritePath,
 		speed = options.speed or 8,
 		lifetime = options.lifetime or 3,
 		offset = options.offset or 0,
@@ -825,6 +956,9 @@ function xenon.createProjectileSystem(source, options)
 	return system
 end
 
+--- Creates a collision group for sprite collision detection.
+-- @function createCollisionGroup
+-- @return table The collision group with add, remove, and checkCollisions methods
 function xenon.createCollisionGroup()
 	local group = {
 		members = {},
@@ -873,6 +1007,10 @@ end
 
 local t = 0
 
+--- Updates the game state and renders sprites.
+-- @function update
+-- @param number dt Delta time since last update
+-- @return nil
 function xenon.update(dt)
 	xenon.clearKeyTransients()
 	for i, sprite in ipairs(deletionQueue) do
@@ -1109,6 +1247,10 @@ function xenon.update(dt)
 	box:render()
 end
 
+--- Runs the main game loop with the provided update function.
+-- @function runGame
+-- @param function updateFunc The game's update function
+-- @return nil
 function xenon.runGame(updateFunc)
 	parallel.waitForAny(function()
 		while true do
