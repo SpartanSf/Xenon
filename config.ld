@@ -1,5 +1,5 @@
 project = "Xenon Engine"
 description = "2D Game Engine for ComputerCraft"
-file = {"main.lua"}  -- your main file
+file = {"main.lua"}
 dir = "docs"
 format = "markdown"
